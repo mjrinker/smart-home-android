@@ -3,8 +3,6 @@ package com.mjrinker.smarthome
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mjrinker.smarthome.models.DeviceAction
-import com.mjrinker.smarthome.models.Room
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,8 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addDataSet() {
-        val data = DataSource.createDataSet()
-        roomAdapter.submitList(data)
+        DataSource().loadRooms(roomAdapter)
     }
 
     private fun initRecyclerView() {

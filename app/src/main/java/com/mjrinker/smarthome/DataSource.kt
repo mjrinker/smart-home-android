@@ -1,90 +1,58 @@
 package com.mjrinker.smarthome
 
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.Room
+import okhttp3.*
+import java.io.IOException
 
 class DataSource {
-    companion object {
-        fun createDataSet(): ArrayList<Room> {
-            val list = ArrayList<Room>()
-            list.add(
-                Room(
-                    "Ashlee's Office",
-                    arrayListOf("Ashlee's Office"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Closet",
-                    arrayListOf("Closet"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Dining Room",
-                    arrayListOf("Dining Room"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Hallway",
-                    arrayListOf("Hallway"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Kitchen",
-                    arrayListOf("Kitchen"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Living Room",
-                    arrayListOf("Living Room"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Master Bathroom",
-                    arrayListOf("Master Bathroom"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Master Bedroom",
-                    arrayListOf("Master Bedroom"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Master Bedroom Lamp",
-                    arrayListOf("Master Bedroom Lamp"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Matt's Office",
-                    arrayListOf("Matt's Office"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            list.add(
-                Room(
-                    "Vanity",
-                    arrayListOf("Vanity"),
-                    arrayListOf(DeviceAction("Off", true), DeviceAction("On", true))
-                )
-            )
-            return list
+    private val TAG = "DataSource"
+
+    private val client = OkHttpClient()
+
+    fun loadRooms(roomAdapter: RoomRecyclerAdapter) {
+        val url = "http://192.168.0.107:3030/rooms"
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        var rooms: ArrayList<Room>? = null
+
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) { println(e) }
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                    val responseBody = response.body()
+                    val responseBodyString = responseBody?.string()
+                    println("$TAG->getRooms: $responseBodyString")
+                    rooms = Gson().fromJson<ArrayList<Room>>(responseBodyString, object : TypeToken<ArrayList<Room>>() { }.type)
+                    if (rooms !== null && rooms?.size!! > 0) {
+                        rooms?.add(
+                            0, Room(
+                                "All",
+                                ArrayList(rooms?.flatMap { it.names }),
+                                arrayListOf(
+                                    DeviceAction("Off", true),
+                                    DeviceAction("On", true)
+                                )
+                            )
+                        )
+                    }
+
+//                    roomAdapter.submitList(rooms)
+                }
+            }
+        })
+
+        while (rooms === null) {
+            Log.d(TAG, "loadRooms: null")
         }
+
+        roomAdapter.submitList(rooms!!)
     }
 }
