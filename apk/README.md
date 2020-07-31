@@ -4,6 +4,7 @@
 - Fix non-wrapping room names
 - Change theme colors to match app icon
 - Add custom scrolling toolbar
+- Standardize icon
 
 ### [v1.1.1](smarthome-v1.1.1.apk):
 - Slight stylistic change to rooms list
