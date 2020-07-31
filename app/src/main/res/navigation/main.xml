@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main">
+
+<!--    <fragment-->
+<!--        android:id="@+id/lighting_screen"-->
+<!--        android:name="com.mjrinker.smarthome.ui.main.lighting.LightingFragment"-->
+<!--        android:label="@string/lighting"-->
+<!--        tools:layout="@layout/fragment_lighting" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/devices_screen"-->
+<!--        android:name="com.mjrinker.smarthome.ui.main.devices.DevicesScreen"-->
+<!--        android:label="@string/devices"-->
+<!--        tools:layout="@layout/fragment_devices" />-->
+
+</navigation>

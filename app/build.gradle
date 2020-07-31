@@ -4,14 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    buildToolsVersion "30.0.1"
 
     defaultConfig {
         applicationId "com.mjrinker.smarthome"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 10100 // (MAJOR * 10000) + (MINOR * 100) + (PATCH * 1)
-        versionName "1.1.0"
+        versionCode 10101 // (MAJOR * 10000) + (MINOR * 100) + (PATCH * 1)
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,6 +31,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     implementation 'com.google.android.material:material:1.1.0'
@@ -39,5 +41,5 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     testImplementation 'junit:junit:4.12'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }

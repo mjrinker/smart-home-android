@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     android:weightSum="100"
     android:gravity="center_vertical"
-    android:background="?android:attr/colorBackground">
+    android:background="?android:attr/colorBackgroundFloating">
 
     <TextView
         android:id="@+id/room_label"
@@ -37,6 +37,8 @@
         android:textColor="?android:attr/colorPrimary"
         android:textSize="@dimen/room_list_item_text_size"
         app:backgroundTint="@android:color/transparent"
+        app:layout_constraintEnd_toStartOf="@+id/action_2"
+        app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="#33AAAAAA"
         app:strokeWidth="0dp" />
 
@@ -56,6 +58,8 @@
         android:textColor="?android:attr/colorPrimary"
         android:textSize="@dimen/room_list_item_text_size"
         app:backgroundTint="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="#33AAAAAA"
         app:strokeWidth="0dp" />
 
