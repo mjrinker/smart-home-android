@@ -1,62 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="100"
-    android:gravity="center_vertical"
-    android:background="?android:attr/colorBackground">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/room_label"
-        android:padding="@dimen/room_list_item_padding"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="50"
-        android:text="@string/room_name_dummy"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="@dimen/room_list_item_text_size"
-        android:lines="1"
-        />
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="center_vertical">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5" />
+        <TextView
+            android:id="@+id/room_label"
+            android:padding="@dimen/room_list_item_padding"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="@string/room_name_dummy"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/room_list_item_text_size"
+            android:lines="2"
+            android:gravity="center_vertical" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/action_1"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="24"
-        android:text="@string/action_dummy"
-        android:textColor="?android:attr/colorPrimary"
-        android:textSize="@dimen/room_list_item_text_size"
-        app:backgroundTint="@android:color/transparent"
-        app:rippleColor="#33AAAAAA"
-        app:strokeWidth="0dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_weight="0.5"
-        android:background="@android:color/darker_gray" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/action_1"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="24"
+            android:text="@string/action_dummy"
+            android:textColor="?android:attr/colorPrimary"
+            android:textSize="@dimen/room_list_item_text_size"
+            app:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toStartOf="@+id/action_2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="#33AAAAAA"
+            app:strokeWidth="0dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/action_2"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="24"
-        android:text="@string/action_dummy"
-        android:textColor="?android:attr/colorPrimary"
-        android:textSize="@dimen/room_list_item_text_size"
-        app:backgroundTint="@android:color/transparent"
-        app:rippleColor="#33AAAAAA"
-        app:strokeWidth="0dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.5"
+            android:background="@android:color/darker_gray" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/action_2"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="24"
+            android:text="@string/action_dummy"
+            android:textColor="?android:attr/colorPrimary"
+            android:textSize="@dimen/room_list_item_text_size"
+            app:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="#33AAAAAA"
+            app:strokeWidth="0dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="center_vertical">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+
+        <View
+            android:id="@+id/border_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="90"
+            android:background="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,5 +1,10 @@
 # Versions
 
+### [v1.2.0](smarthome-v1.2.0.apk):
+- Fix non-wrapping room names
+- Change theme colors to match app icon
+- Add custom scrolling toolbar
+
 ### [v1.1.1](smarthome-v1.1.1.apk):
 - Slight stylistic change to rooms list
   - 🤓 Refactor rooms list layout to use LinearLayout

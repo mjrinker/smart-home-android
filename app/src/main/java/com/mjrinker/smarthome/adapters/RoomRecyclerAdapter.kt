@@ -1,5 +1,6 @@
 package com.mjrinker.smarthome.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,10 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (holder) {
             is RoomViewHolder -> {
                 holder.bind(rooms[position])
+                if (position == rooms.size - 1) {
+                    // remove bottom border
+                    holder.bottomBorder.setBackgroundColor(Color.argb(0, 0, 0, 0))
+                }
             }
         }
     }
@@ -59,6 +64,7 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val roomLabel: TextView = itemView.room_label
         private val action1: MaterialButton = itemView.action_1
         private val action2: MaterialButton = itemView.action_2
+        val bottomBorder: View = itemView.border_bottom
 
         fun bind(room: Room) {
             roomLabel.text = room.label

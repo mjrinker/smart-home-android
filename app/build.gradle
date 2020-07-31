@@ -10,8 +10,8 @@ android {
         applicationId "com.mjrinker.smarthome"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 10101 // (MAJOR * 10000) + (MINOR * 100) + (PATCH * 1)
-        versionName "1.1.1"
+        versionCode 10200 // (MAJOR * 10000) + (MINOR * 100) + (PATCH * 1)
+        versionName "1.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

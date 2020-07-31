@@ -19,6 +19,9 @@ class RoomsListActivity : AppCompatActivity() {
 
         initRecyclerView()
         addDataSet()
+
+        setSupportActionBar(findViewById(R.id.rooms_toolbar))
+        title = "Rooms"
     }
 
     private fun addDataSet() {
@@ -28,8 +31,8 @@ class RoomsListActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@RoomsListActivity)
-            val topSpacingDecorator = SpacingItemDecorator(30, 0, 0, 0)
-            addItemDecoration(topSpacingDecorator)
+//            val topSpacingDecorator = SpacingItemDecorator(30, 0, 0, 0)
+//            addItemDecoration(topSpacingDecorator)
             roomAdapter = RoomRecyclerAdapter()
             adapter = roomAdapter
         }
