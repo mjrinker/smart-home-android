@@ -87,8 +87,8 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
             val request = Request.Builder()
                 .url(url)
-                .post(body)
                 .header("X-ApiVersion", "1.0.0")
+                .post(body)
                 .build()
 
             client.newCall(request).enqueue(object: Callback {

@@ -17,6 +17,7 @@ class DataSource {
         val url = "http://192.168.0.107:3030/rooms"
         val request = Request.Builder()
             .url(url)
+            .header("X-ApiVersion", "1.0.0")
             .build()
 
         var rooms: ArrayList<Room>? = null
