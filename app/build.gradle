@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.mjrinker.smarthome"
+        applicationId "com.mjrinker.smarthome.beta"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 10201 // (MAJOR * 10000) + (MINOR * 100) + (PATCH * 1)
