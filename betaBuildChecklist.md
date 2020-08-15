@@ -7,12 +7,13 @@
 - change the following in `colors.xml`:
 
 ```diff
--    <color name="colorPrimary">@color/colorPrimary</color>
--    <color name="colorPrimaryDark">@color/colorPrimaryDark</color>
--    <color name="colorAccent">@color/colorAccent</color>
+-    <color name="colorPrimary">@color/colorPrimaryMain</color>
+-    <color name="colorPrimaryDark">@color/colorPrimaryDarkMain</color>
+-    <color name="colorAccent">@color/colorAccentMain</color>
 +    <color name="colorPrimary">@color/colorPrimaryBeta</color>
 +    <color name="colorPrimaryDark">@color/colorPrimaryDarkBeta</color>
 +    <color name="colorAccent">@color/colorAccentBeta</color>
 ```
 
-- Create new Vector Asset for the app icon
+- create new "Image Asset" for the app icon
+- **optional** change the hostname, port, and/or version of the API

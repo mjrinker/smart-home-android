@@ -18,7 +18,7 @@ class DataSource {
 
     fun loadRooms(roomAdapter: RoomRecyclerAdapter) {
         var rooms: ArrayList<Room>? = null
-        val url = "http://192.168.0.107:3031/rooms"
+        val url = "http://192.168.0.107:3030/rooms"
         val request = Request.Builder()
             .url(url)
             .header("X-ApiVersion", "2.0.0")

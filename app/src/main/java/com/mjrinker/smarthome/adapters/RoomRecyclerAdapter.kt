@@ -72,11 +72,11 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             action2.text = room.actions[1].action
 
             action1.setOnClickListener {
-                sendPerformActionRequest("http://192.168.0.107:3031/devices/action", room.name, room.actions[0])
+                sendPerformActionRequest("http://192.168.0.107:3030/devices/action", room.name, room.actions[0])
             }
 
             action2.setOnClickListener {
-                sendPerformActionRequest("http://192.168.0.107:3031/devices/action", room.name, room.actions[1])
+                sendPerformActionRequest("http://192.168.0.107:3030/devices/action", room.name, room.actions[1])
             }
         }
 

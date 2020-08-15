@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Home (β)</string>
+    <string name="app_name">Smart Home</string>
     <string name="room_name_dummy">Room Name</string>
     <string name="action_dummy">Action</string>
     <string name="lighting">Lighting</string>

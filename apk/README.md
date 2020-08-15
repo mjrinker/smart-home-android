@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.2.1](smarthome-v1.2.1.apk):
+- 🤓 Implement Smart Home API v2.0.0
+
 ### [v1.2.0](smarthome-v1.2.0.apk):
 - Fix non-wrapping room names
 - Change theme colors to match app icon
