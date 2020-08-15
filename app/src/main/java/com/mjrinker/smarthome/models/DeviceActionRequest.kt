@@ -1,7 +1,7 @@
 package com.mjrinker.smarthome.models
 
 class DeviceActionRequest(
-    val nickname: String,
+    val nickname: String?,
     val actions: ArrayList<DeviceAction>
 ) {
     override fun toString(): String {

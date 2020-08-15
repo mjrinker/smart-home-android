@@ -16,9 +16,9 @@ class DataSource {
 
     private val client = OkHttpClient()
 
-    fun loadRooms(roomAdapter: RoomRecyclerAdapter) {
+    fun loadRooms(roomAdapter: RoomRecyclerAdapter): ArrayList<Room>? {
         var rooms: ArrayList<Room>? = null
-        val url = "http://192.168.0.107:3030/rooms"
+        val url = "http://192.168.0.107:3031/rooms"
         val request = Request.Builder()
             .url(url)
             .header("X-ApiVersion", "2.0.0")
@@ -55,5 +55,6 @@ class DataSource {
         }
 
         roomAdapter.submitList(rooms!!)
+        return rooms
     }
 }

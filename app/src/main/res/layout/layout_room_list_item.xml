@@ -41,8 +41,6 @@
             android:textColor="?android:attr/colorPrimary"
             android:textSize="@dimen/room_list_item_text_size"
             app:backgroundTint="@android:color/transparent"
-            app:layout_constraintEnd_toStartOf="@+id/action_2"
-            app:layout_constraintTop_toTopOf="parent"
             app:rippleColor="#33AAAAAA"
             app:strokeWidth="0dp" />
 
@@ -62,8 +60,6 @@
             android:textColor="?android:attr/colorPrimary"
             android:textSize="@dimen/room_list_item_text_size"
             app:backgroundTint="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:rippleColor="#33AAAAAA"
             app:strokeWidth="0dp" />
 

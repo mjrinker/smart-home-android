@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.mjrinker.smarthome.R
+import com.mjrinker.smarthome.SmartHomeAPI
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.DeviceActionRequest
 import com.mjrinker.smarthome.models.Room
@@ -17,11 +18,9 @@ import kotlinx.android.synthetic.main.layout_room_list_item.view.*
 import okhttp3.*
 import java.io.IOException
 
-class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoomListener: OnRoomListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "roomRecyclerAdapter"
-
-    private var rooms: List<Room> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RoomViewHolder(
@@ -30,7 +29,8 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     R.layout.layout_room_list_item,
                     parent,
                     false
-                )
+                ),
+            onRoomListener
         )
     }
 
@@ -50,13 +50,14 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return rooms.size
     }
 
-    fun submitList(roomList: List<Room>) {
+    fun submitList(roomList: ArrayList<Room>) {
         rooms = roomList
     }
 
     class RoomViewHolder constructor(
-        itemView: View
-    ): RecyclerView.ViewHolder(itemView) {
+        itemView: View,
+        private var onRoomListener: OnRoomListener
+    ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val TAG = "roomRecyclerAdapter"
 
         private val client = OkHttpClient()
@@ -66,17 +67,26 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val action2: MaterialButton = itemView.action_2
         val bottomBorder: View = itemView.border_bottom
 
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            onRoomListener.onRoomClick(adapterPosition)
+        }
+
         fun bind(room: Room) {
             roomLabel.text = room.label
             action1.text = room.actions[0].action
             action2.text = room.actions[1].action
 
             action1.setOnClickListener {
-                sendPerformActionRequest("http://192.168.0.107:3030/devices/action", room.name, room.actions[0])
+                SmartHomeAPI("192.168.0.107", 3031).performAction(room.name, room.actions[0]).send()
             }
 
             action2.setOnClickListener {
-                sendPerformActionRequest("http://192.168.0.107:3030/devices/action", room.name, room.actions[1])
+                SmartHomeAPI("192.168.0.107", 3031).performAction(room.name, room.actions[1]).send()
             }
         }
 
@@ -101,5 +111,9 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 override fun onResponse(call: Call, response: Response) = println(response.body()?.string())
             })
         }
+    }
+
+    public interface OnRoomListener {
+        fun onRoomClick(position: Int)
     }
 }

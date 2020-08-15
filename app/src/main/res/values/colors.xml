@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/colorPrimaryMain</color>
-    <color name="colorPrimaryDark">@color/colorPrimaryDarkMain</color>
-    <color name="colorAccent">@color/colorAccentMain</color>
+    <color name="colorPrimary">@color/colorPrimaryAlpha</color>
+    <color name="colorPrimaryDark">@color/colorPrimaryDarkAlpha</color>
+    <color name="colorAccent">@color/colorAccentAlpha</color>
 
     <color name="colorPrimaryMain">#BAC832</color>
     <color name="colorPrimaryDarkMain">#8C9725</color>
     <color name="colorAccentMain">#DA0372</color>
+
     <color name="colorPrimaryBeta">#8755DF</color>
     <color name="colorPrimaryDarkBeta">#623BA6</color>
     <color name="colorAccentBeta">#BAC832</color>
+
+    <color name="colorPrimaryAlpha">#5490CF</color>
+    <color name="colorPrimaryDarkAlpha">#3C70A6</color>
+    <color name="colorAccentAlpha">#C89632</color>
 </resources>

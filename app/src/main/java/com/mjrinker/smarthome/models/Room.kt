@@ -1,10 +1,15 @@
 package com.mjrinker.smarthome.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
+
+@Parcelize
 class Room(
-    var label: String,
-    var name: String,
-    var actions: ArrayList<DeviceAction>
-) {
+    var label: String?,
+    var name: String?,
+    var actions: @RawValue ArrayList<DeviceAction>
+) : Parcelable {
     override fun toString(): String {
         return "Room(label='$label', name=$name actions=$actions)"
     }
