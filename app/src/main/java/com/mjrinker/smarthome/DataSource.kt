@@ -6,6 +6,8 @@ import com.google.gson.reflect.TypeToken
 import com.mjrinker.smarthome.adapters.RoomRecyclerAdapter
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.Room
+import com.nfeld.jsonpathkt.JsonPath
+import com.nfeld.jsonpathkt.extension.read
 import okhttp3.*
 import java.io.IOException
 
@@ -16,10 +18,10 @@ class DataSource {
 
     fun loadRooms(roomAdapter: RoomRecyclerAdapter) {
         var rooms: ArrayList<Room>? = null
-        val url = "http://192.168.0.107:3030/rooms"
+        val url = "http://192.168.0.107:3031/rooms"
         val request = Request.Builder()
             .url(url)
-            .header("X-ApiVersion", "1.0.0")
+            .header("X-ApiVersion", "2.0.0")
             .build()
 
         client.newCall(request).enqueue(object: Callback {
@@ -31,12 +33,12 @@ class DataSource {
                     val responseBody = response.body()
                     val responseBodyString = responseBody?.string()
                     println("$TAG->getRooms: $responseBodyString")
-                    rooms = Gson().fromJson<ArrayList<Room>>(responseBodyString, object : TypeToken<ArrayList<Room>>() { }.type)
+                    rooms = JsonPath.parse(responseBodyString)?.read("$.rooms")
                     if (rooms !== null && rooms?.size!! > 0) {
                         rooms?.add(
                             0, Room(
                                 "All",
-                                ArrayList(rooms?.flatMap { it.names }),
+                                "*bulb",
                                 arrayListOf(
                                     DeviceAction("Off", true),
                                     DeviceAction("On", true)

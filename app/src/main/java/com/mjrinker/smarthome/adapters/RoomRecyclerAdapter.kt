@@ -72,27 +72,27 @@ class RoomRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             action2.text = room.actions[1].action
 
             action1.setOnClickListener {
-                sendPerformActionRequest("http://192.168.0.107:3030/device/action", room.names, room.actions[0])
+                sendPerformActionRequest("http://192.168.0.107:3031/devices/action", room.name, room.actions[0])
             }
 
             action2.setOnClickListener {
-                sendPerformActionRequest("http://192.168.0.107:3030/device/action", room.names, room.actions[1])
+                sendPerformActionRequest("http://192.168.0.107:3031/devices/action", room.name, room.actions[1])
             }
         }
 
-        private fun sendPerformActionRequest(url: String, deviceNames: ArrayList<String>, action: DeviceAction) {
-            val json = Gson().toJson(deviceNames.map { it ->
+        private fun sendPerformActionRequest(url: String, name: String, action: DeviceAction) {
+            val json = Gson().toJson(arrayListOf(
                 DeviceActionRequest(
-                    nickname = it,
+                    nickname = name,
                     actions = arrayListOf(action)
                 )
-            })
+            ))
 
             Log.d(TAG, json)
             val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
             val request = Request.Builder()
                 .url(url)
-                .header("X-ApiVersion", "1.0.0")
+                .header("X-ApiVersion", "2.0.0")
                 .post(body)
                 .build()
 
