@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.3.0](smarthome-v1.3.0.apk):
+- Add light control (brightness, color temperature) per room
+
 ### [v1.2.1](smarthome-v1.2.1.apk):
 - 🤓 Implement Smart Home API v2.0.0
 
