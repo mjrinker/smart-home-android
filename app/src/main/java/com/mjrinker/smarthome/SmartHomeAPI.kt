@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.DeviceActionRequest
+import com.mjrinker.smarthome.models.DeviceState
 import com.mjrinker.smarthome.models.Room
 import com.nfeld.jsonpathkt.JsonPath
 import com.nfeld.jsonpathkt.extension.read
@@ -43,7 +44,6 @@ class SmartHomeAPI(
                     println("$TAG->getRooms: $responseBodyString")
                     val roomsResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<Room>>("$.rooms")
                     if (roomsResponse != null) {
-                        println("$TAG->getRooms: scat")
                         for (room in roomsResponse) {
                             rooms.add(room)
                         }
@@ -59,6 +59,35 @@ class SmartHomeAPI(
                             )
                         )
                     )
+                }
+            }
+        }
+        return this
+    }
+
+    fun getDeviceState(deviceNames: ArrayList<String?>, deviceStates: ArrayList<DeviceState>) : SmartHomeAPI {
+        val path = "/devices/state"
+        url = "$baseUrl$path"
+        method = "post"
+
+        json = Gson().toJson(deviceNames)
+        Log.d(TAG, json)
+
+        callback = object: Callback {
+            override fun onFailure(call: Call, e: IOException) { println(e) }
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                    val responseBody = response.body()
+                    val responseBodyString = responseBody?.string()
+                    println("$TAG->getDeviceState: $responseBodyString")
+                    val deviceStateResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<DeviceState>>("$.devices")
+                    if (deviceStateResponse != null) {
+                        for (device in deviceStateResponse) {
+                            deviceStates.add(device)
+                        }
+                    }
                 }
             }
         }
@@ -85,7 +114,7 @@ class SmartHomeAPI(
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         var requestBuilder = Request.Builder()
             .url(url)
-            .header("X-ApiVersion", "2.0.0")
+            .header("X-ApiVersion", "2")
 
         requestBuilder = when (method) {
             "get" -> requestBuilder.get()

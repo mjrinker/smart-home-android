@@ -4,4 +4,5 @@
     <string name="action_dummy">Action</string>
     <string name="lighting">Lighting</string>
     <string name="devices">Devices</string>
+    <string name="brightness">75</string>
 </resources>
