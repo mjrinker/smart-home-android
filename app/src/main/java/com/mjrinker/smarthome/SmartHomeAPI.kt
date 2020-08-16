@@ -2,15 +2,13 @@ package com.mjrinker.smarthome
 
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.DeviceActionRequest
 import com.mjrinker.smarthome.models.Room
+import com.nfeld.jsonpathkt.JsonPath
+import com.nfeld.jsonpathkt.extension.read
 import okhttp3.*
 import java.io.IOException
-import java.lang.reflect.Type
-import kotlin.reflect.KClass
-import kotlin.reflect.typeOf
 
 class SmartHomeAPI(
     host: String = "127.0.0.1",
@@ -25,11 +23,45 @@ class SmartHomeAPI(
     private var url = baseUrl
     private var method = "get"
     private var json = ""
+    private var callback: Any = object: Callback {
+        override fun onFailure(call: Call, e: IOException) { println(e) }
+        override fun onResponse(call: Call, response: Response) { println(response.body()?.string()) }
+    }
 
-    fun getRooms() : SmartHomeAPI {
+    fun getRooms(rooms: ArrayList<Room>) : SmartHomeAPI {
         val path = "/rooms"
         url = "$baseUrl$path"
         method = "get"
+        callback = object: Callback {
+            override fun onFailure(call: Call, e: IOException) { println(e) }
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                    val responseBody = response.body()
+                    val responseBodyString = responseBody?.string()
+                    println("$TAG->getRooms: $responseBodyString")
+                    val roomsResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<Room>>("$.rooms")
+                    if (roomsResponse != null) {
+                        println("$TAG->getRooms: scat")
+                        for (room in roomsResponse) {
+                            rooms.add(room)
+                        }
+                    }
+
+                    rooms.add(
+                        0, Room(
+                            "All",
+                            "*bulb",
+                            arrayListOf(
+                                DeviceAction("Off", true),
+                                DeviceAction("On", true)
+                            )
+                        )
+                    )
+                }
+            }
+        }
         return this
     }
 
@@ -66,9 +98,7 @@ class SmartHomeAPI(
         }
 
         val request = requestBuilder.build()
-        client.newCall(request).enqueue(object: Callback {
-            override fun onFailure(call: Call, e: IOException) { println(e) }
-            override fun onResponse(call: Call, response: Response) = println(response.body()?.string())
-        })
+        val response = client.newCall(request)
+        response.enqueue(callback as Callback)
     }
 }

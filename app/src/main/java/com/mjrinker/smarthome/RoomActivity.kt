@@ -2,7 +2,6 @@ package com.mjrinker.smarthome
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.mjrinker.smarthome.models.Room
 
 class RoomActivity : AppCompatActivity() {

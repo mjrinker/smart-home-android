@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mjrinker.smarthome.adapters.RoomRecyclerAdapter
 import com.mjrinker.smarthome.models.Room
-import com.mjrinker.smarthome.util.SpacingItemDecorator
 import kotlinx.android.synthetic.main.activity_rooms_list.*
 
 class RoomsListActivity : AppCompatActivity(), RoomRecyclerAdapter.OnRoomListener {
