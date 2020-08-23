@@ -27,8 +27,6 @@ class RoomActivity : AppCompatActivity() {
             val room = intent.getParcelableExtra<Room>("selected_room")
 
             if (room != null) {
-                // TODO persist progress
-                // TODO make back arrow go back
                 val title : TextView = findViewById(R.id.toolbar_title)
                 val backArrow : ImageButton = findViewById(R.id.toolbar_back_arrow)
                 val action1 : MaterialButton = findViewById(R.id.action_1)

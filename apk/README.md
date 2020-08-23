@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.3.1](smarthome-v1.3.1.apk):
+- Fix crash when tapping on "All" room
+
 ### [v1.3.0](smarthome-v1.3.0.apk):
 - Add light control (brightness, color temperature) per room
 
