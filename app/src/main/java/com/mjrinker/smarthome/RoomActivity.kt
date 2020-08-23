@@ -13,6 +13,8 @@ import com.mjrinker.smarthome.models.Room
 import com.triggertrap.seekarc.SeekArc
 import com.triggertrap.seekarc.SeekArc.OnSeekArcChangeListener
 import kotlin.math.roundToInt
+import android.os.Handler;
+import android.os.Looper
 
 
 class RoomActivity : AppCompatActivity() {
@@ -49,12 +51,15 @@ class RoomActivity : AppCompatActivity() {
                         Log.d(TAG, "onCreate: null")
                     }
 
-                    brightnessProgress = deviceStates.map { it -> it.light_state.brightness }.average().roundToInt()
-                    colorProgress = deviceStates.map { it -> it.light_state.temperature }.average().roundToInt()
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed({
+                        brightnessProgress = deviceStates.map { it -> it.light_state.brightness }.average().roundToInt()
+                        colorProgress = deviceStates.map { it -> it.light_state.temperature }.average().roundToInt()
 
-                    brightnessControl.progress = brightnessProgress
-                    brightnessProgressText.text = 0.coerceAtLeast(brightnessProgress).toString()
-                    colorControl.setMinStartValue(colorProgress.toFloat()).apply()
+                        brightnessControl.progress = brightnessProgress
+                        brightnessProgressText.text = 0.coerceAtLeast(brightnessProgress).toString()
+                        colorControl.setMinStartValue(colorProgress.toFloat()).apply()
+                    }, 200)
                 }
 
                 updateLightControls()
