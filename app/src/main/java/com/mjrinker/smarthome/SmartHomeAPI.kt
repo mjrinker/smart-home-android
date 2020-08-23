@@ -81,9 +81,6 @@ class SmartHomeAPI(
 
                     val responseBody = response.body()
                     val responseBodyString = responseBody?.string()
-                    if (responseBodyString != null) {
-                        println("$TAG->getDeviceState: response size: ${responseBodyString.length}")
-                    }
                     println("$TAG->getDeviceState: $responseBodyString")
                     val deviceStateResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<DeviceState>>("$.devices")
                     if (deviceStateResponse != null) {
