@@ -34,27 +34,23 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/action_1"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.ToggleStart"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="72dp"
             android:layout_weight="48"
             android:text="@string/action_dummy"
-            android:textColor="?android:attr/colorPrimary"
+            android:backgroundTint="?android:attr/colorPrimary"
+            android:textColor="?android:attr/textColorPrimaryInverse"
             android:textSize="@dimen/room_action_text_size"
             app:backgroundTint="@android:color/transparent"
             app:rippleColor="#33AAAAAA"
-            app:strokeWidth="1dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="72dp"
-            android:layout_weight="1.333" />
+            app:strokeWidth="0dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/action_2"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.ToggleEnd"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="72dp"
             android:layout_weight="48"
             android:text="@string/action_dummy"
             android:textColor="?android:attr/colorPrimary"
@@ -90,7 +86,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:max="100"
-                app:progressColor="@color/colorPrimary"
+                app:progressColor="@color/colorOff"
+                app:progress="75"
                 app:progressWidth="6dp"
                 app:rotation="180"
                 app:roundEdges="true"
@@ -117,7 +114,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-            android:id="@+id/color_control"
+            android:id="@+id/temperature_control"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             app:corner_radius="10"
@@ -125,17 +122,70 @@
             app:max_value="100"
             app:bar_height="6dp"
             app:bar_color_mode="gradient"
-            app:bar_gradient_start="#ff8800"
-            app:bar_gradient_end="#eeeeee"
-            app:bar_color="?android:attr/textColorSecondary"
+            app:bar_gradient="#eeae01;#f7d780;#fceecb;#ffffff"
             app:bar_highlight_height="6dp"
             app:bar_highlight_color_mode="gradient_partial"
-            app:bar_highlight_gradient_start="#ff8800"
-            app:bar_highlight_gradient_end="#eeeeee"
+            app:bar_highlight_gradient="#eeae01;#f7d780;#fceecb;#ffffff"
             app:thumb_color_match_bar="true"
             app:thumb_diameter="30dp"
             app:data_type="_integer"
             />
+
+        <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+            android:id="@+id/color_control"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:corner_radius="10"
+            app:min_value="1"
+            app:max_value="100"
+            app:bar_height="6dp"
+            app:bar_color_mode="gradient"
+            app:bar_gradient="#ff0000;#ff8800;#ffff00;#88ff00;#00ff00;#00ff88;#00ffff;#0088ff;#0000ff;#8800ff;#ff00ff;#ff0088"
+            app:bar_highlight_height="6dp"
+            app:bar_highlight_color_mode="gradient_partial"
+            app:bar_highlight_gradient="#ff0000;#ff8800;#ffff00;#88ff00;#00ff00;#00ff88;#00ffff;#0088ff;#0000ff;#8800ff;#ff00ff;#ff0088"
+            app:thumb_color_match_bar="true"
+            app:thumb_diameter="30dp"
+            app:data_type="_integer"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/temperature_mode_toggle"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.ToggleStart"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
+                android:layout_weight="48"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:text="Temperature"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="@dimen/room_sub_action_text_size"
+                app:backgroundTint="@android:color/transparent"
+                app:rippleColor="#33AAAAAA"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_mode_toggle"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.ToggleEnd"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
+                android:layout_weight="48"
+                android:text="Color"
+                android:textColor="?android:attr/colorPrimary"
+                android:textSize="@dimen/room_sub_action_text_size"
+                app:backgroundTint="@android:color/transparent"
+                app:rippleColor="#33AAAAAA"
+                app:strokeWidth="1dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

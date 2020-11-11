@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mjrinker.smarthome.adapters.RoomRecyclerAdapter
 import com.mjrinker.smarthome.models.Room
 import kotlinx.android.synthetic.main.activity_rooms_list.*
+import kotlinx.coroutines.*
 
 class RoomsListActivity : AppCompatActivity(), RoomRecyclerAdapter.OnRoomListener {
 
@@ -26,6 +27,15 @@ class RoomsListActivity : AppCompatActivity(), RoomRecyclerAdapter.OnRoomListene
 
         setSupportActionBar(findViewById(R.id.rooms_toolbar))
         title = "Rooms"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        notifyDataSetChanged()
+    }
+
+    private fun notifyDataSetChanged() = CoroutineScope(Dispatchers.Main).launch {
+        roomAdapter.notifyDataSetChanged()
     }
 
     private fun addDataSet() {

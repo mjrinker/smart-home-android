@@ -2,6 +2,7 @@ package com.mjrinker.smarthome
 
 import android.util.Log
 import com.google.gson.Gson
+import com.mjrinker.smarthome.adapters.RoomRecyclerAdapter
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.DeviceActionRequest
 import com.mjrinker.smarthome.models.DeviceState
@@ -24,7 +25,7 @@ class SmartHomeAPI(
     private var url = baseUrl
     private var method = "get"
     private var json = ""
-    private var callback: Any = object: Callback {
+    var callback: Any = object: Callback {
         override fun onFailure(call: Call, e: IOException) { println(e) }
         override fun onResponse(call: Call, response: Response) { println(response.body()?.string()) }
     }
@@ -44,9 +45,7 @@ class SmartHomeAPI(
                     println("$TAG->getRooms: $responseBodyString")
                     val roomsResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<Room>>("$.rooms")
                     if (roomsResponse != null) {
-                        for (room in roomsResponse) {
-                            rooms.add(room)
-                        }
+                        rooms.addAll(roomsResponse)
                     }
 
                     rooms.add(
@@ -84,9 +83,7 @@ class SmartHomeAPI(
                     println("$TAG->getDeviceState: $responseBodyString")
                     val deviceStateResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<DeviceState>>("$.devices")
                     if (deviceStateResponse != null) {
-                        for (device in deviceStateResponse) {
-                            deviceStates.add(device)
-                        }
+                        deviceStates.addAll(deviceStateResponse)
                     }
                 }
             }

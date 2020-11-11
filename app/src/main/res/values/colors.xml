@@ -6,7 +6,7 @@
 
     <color name="colorPrimaryMain">#BAC832</color>
     <color name="colorPrimaryDarkMain">#8C9725</color>
-    <color name="colorAccentMain">#DA0372</color>
+    <color name="colorAccentMain">#039DDA</color>
 
     <color name="colorPrimaryBeta">#8755DF</color>
     <color name="colorPrimaryDarkBeta">#623BA6</color>
@@ -15,4 +15,6 @@
     <color name="colorPrimaryAlpha">#5490CF</color>
     <color name="colorPrimaryDarkAlpha">#3C70A6</color>
     <color name="colorAccentAlpha">#C89632</color>
+
+    <color name="colorOff">#CCD3CEC8</color>
 </resources>

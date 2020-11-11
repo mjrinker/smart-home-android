@@ -1,6 +1,5 @@
 package com.mjrinker.smarthome
 
-import android.util.Log
 import com.mjrinker.smarthome.adapters.RoomRecyclerAdapter
 import com.mjrinker.smarthome.models.Room
 
@@ -11,9 +10,7 @@ class DataSource {
         val rooms: ArrayList<Room> = arrayListOf()
         SmartHomeAPI("192.168.0.107", 3030).getRooms(rooms).send()
 
-        while (rooms.size == 0) {
-            Log.d(TAG, "loadRooms: null")
-        }
+        while (rooms.size == 0) {}
 
         roomAdapter.submitList(rooms)
         return rooms

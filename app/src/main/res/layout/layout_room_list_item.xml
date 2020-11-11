@@ -33,26 +33,21 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/action_1"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.ToggleStart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="24"
             android:text="@string/action_dummy"
-            android:textColor="?android:attr/colorPrimary"
+            android:backgroundTint="?android:attr/colorPrimary"
+            android:textColor="?android:attr/textColorPrimaryInverse"
             android:textSize="@dimen/room_list_item_text_size"
             app:backgroundTint="@android:color/transparent"
             app:rippleColor="#33AAAAAA"
             app:strokeWidth="0dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="0.5"
-            android:background="@android:color/darker_gray" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/action_2"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.ToggleEnd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="24"
@@ -61,7 +56,7 @@
             android:textSize="@dimen/room_list_item_text_size"
             app:backgroundTint="@android:color/transparent"
             app:rippleColor="#33AAAAAA"
-            app:strokeWidth="0dp" />
+            app:strokeWidth="1dp" />
 
     </LinearLayout>
 

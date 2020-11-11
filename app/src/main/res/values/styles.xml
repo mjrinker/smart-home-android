@@ -7,4 +7,39 @@
     <item name="colorAccent">@color/colorAccent</item>
 </style>
 
+<style name="MaterialOutlinedButton" parent="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+<style name="Widget.MaterialComponents.Button.OutlinedButton.ToggleStart" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="shapeAppearanceOverlay">@style/RoundStart</item>
+</style>
+<style name="RoundStart">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopLeft">4dp</item>
+    <item name="cornerSizeBottomLeft">4dp</item>
+    <item name="cornerSizeTopRight">0dp</item>
+    <item name="cornerSizeBottomRight">0dp</item>
+</style>
+
+<style name="Widget.MaterialComponents.Button.OutlinedButton.ToggleMiddle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="shapeAppearanceOverlay">@style/RoundMiddle</item>
+</style>
+<style name="RoundMiddle">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopLeft">0dp</item>
+    <item name="cornerSizeBottomLeft">0dp</item>
+    <item name="cornerSizeTopRight">0dp</item>
+    <item name="cornerSizeBottomRight">0dp</item>
+</style>
+
+<style name="Widget.MaterialComponents.Button.OutlinedButton.ToggleEnd" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="shapeAppearanceOverlay">@style/RoundEnd</item>
+</style>
+<style name="RoundEnd">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopLeft">0dp</item>
+    <item name="cornerSizeBottomLeft">0dp</item>
+    <item name="cornerSizeTopRight">4dp</item>
+    <item name="cornerSizeBottomRight">4dp</item>
+</style>
+
 </resources>

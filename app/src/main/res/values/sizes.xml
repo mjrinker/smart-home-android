@@ -2,5 +2,6 @@
     <dimen name="room_list_item_padding">20dp</dimen>
     <dimen name="room_list_item_text_size">15sp</dimen>
     <dimen name="room_action_text_size">20sp</dimen>
+    <dimen name="room_sub_action_text_size">18sp</dimen>
     <dimen name="toolbar_text_size">20sp</dimen>
 </resources>
