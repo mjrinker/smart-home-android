@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.4.1](smarthome-v1.4.1.apk):
+- Fix toggle button "off" color in dark mode (was white, should be dark)
+
 ### [v1.4.0](smarthome-v1.4.0.apk):
 - Add light color temperature/RGB color controls
 - Change UI to make on/off buttons toggle and highlight on or off based on the light state

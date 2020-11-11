@@ -1,10 +1,10 @@
 package com.mjrinker.smarthome
 
+import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.RelativeLayout
@@ -23,7 +23,7 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
-import kotlin.collections.ArrayList
+import java.security.AccessController.getContext
 import kotlin.math.roundToInt
 
 
@@ -57,6 +57,7 @@ class RoomActivity : AppCompatActivity() {
     private var colorProgress : Number = 0
     private var mode = COLOR_MODE_DISABLED
     private lateinit var COLORS : Colors
+    private var nightMode : Boolean = false
     private var currentLightColor: Int = -1
     private val deviceStates: ArrayList<DeviceState> = arrayListOf()
 
@@ -65,6 +66,7 @@ class RoomActivity : AppCompatActivity() {
         setContentView(R.layout.activity_room)
 
         COLORS = Colors(this)
+        nightMode = this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
 
         if (intent.hasExtra("selected_room")) {
             room = intent.getParcelableExtra<Room>("selected_room")
@@ -74,11 +76,11 @@ class RoomActivity : AppCompatActivity() {
                 updateLightControls()
 
                 val clickables : ArrayList<View> = arrayListOf(
-                    action1,
-                    action2,
-                    temperatureModeToggle,
-                    colorModeToggle,
-                    backArrow
+                        action1,
+                        action2,
+                        temperatureModeToggle,
+                        colorModeToggle,
+                        backArrow
                 )
 
                 for (clickable in clickables) {
@@ -92,6 +94,7 @@ class RoomActivity : AppCompatActivity() {
                     override fun onStopTrackingTouch(seekArc: SeekArc) {
                         changeBrightness()
                     }
+
                     override fun onProgressChanged(seekArc: SeekArc, progress: Int, fromUser: Boolean) {
                         brightnessProgress = progress
                         brightnessProgressText.text = brightnessProgress.toString()
@@ -113,15 +116,15 @@ class RoomActivity : AppCompatActivity() {
 
     private fun changeBrightness() {
         performAction(DeviceAction(
-            "brightness",
-            brightnessProgress
+                "brightness",
+                brightnessProgress
         ))
     }
 
     private fun changeColor() {
         performAction(DeviceAction(
-            "color",
-            ColorHelper.blendColors(colorProgress.toDouble() / 100, LightState(0, "000000", 0).colorInts, "0xRGB")
+                "color",
+                ColorHelper.blendColors(colorProgress.toDouble() / 100, LightState(0, "000000", 0).colorInts, "0xRGB")
         ))
         setCurrentLightColor()
         brightnessControl.progressColor = currentLightColor
@@ -129,8 +132,8 @@ class RoomActivity : AppCompatActivity() {
 
     private fun changeColorTemperature() {
         performAction(DeviceAction(
-            "temperature",
-            temperatureProgress
+                "temperature",
+                temperatureProgress
         ))
         setCurrentLightColor()
         brightnessControl.progressColor = currentLightColor
@@ -177,26 +180,29 @@ class RoomActivity : AppCompatActivity() {
                 actionToggleButton.toggle(view as MaterialButton)
                 val action = room!!.actions[actionButtons.indexOf(view)]
                 performAction(
-                    action,
-                    object: Callback {
-                        override fun onFailure(call: Call, e: IOException) { println(e) }
-                        override fun onResponse(call: Call, response: Response) {
-                            response.use {
-                                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                        action,
+                        object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                println(e)
+                            }
 
-                                val responseBody = response.body()
-                                val responseBodyString = responseBody?.string()
-                                println("$TAG->getDeviceState: $responseBodyString")
-                                val deviceStateResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<DeviceState>>("$.devices")
-                                if (deviceStateResponse != null) {
-                                    for (device in deviceStateResponse) {
-                                        deviceStates.add(device)
+                            override fun onResponse(call: Call, response: Response) {
+                                response.use {
+                                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                                    val responseBody = response.body()
+                                    val responseBodyString = responseBody?.string()
+                                    println("$TAG->getDeviceState: $responseBodyString")
+                                    val deviceStateResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<DeviceState>>("$.devices")
+                                    if (deviceStateResponse != null) {
+                                        for (device in deviceStateResponse) {
+                                            deviceStates.add(device)
+                                        }
                                     }
+                                    updateLightControls()
                                 }
-                                updateLightControls()
                             }
                         }
-                    }
                 )
             }
         }
@@ -211,8 +217,8 @@ class RoomActivity : AppCompatActivity() {
         }
 
         apiConnection.performAction(
-            room!!.name,
-            action
+                room!!.name,
+                action
         ).send()
     }
 
@@ -239,7 +245,7 @@ class RoomActivity : AppCompatActivity() {
         actionButtons = arrayListOf(action1, action2)
         actionToggleButton = ToggleButton(
                 actionButtons,
-                COLORS.colorDefaultBackground,
+                if (nightMode) COLORS.colorDarkDefaultBackground else COLORS.colorDefaultBackground,
                 COLORS.colorPrimary,
                 COLORS.buttonTextColorInverse
         )
@@ -252,7 +258,7 @@ class RoomActivity : AppCompatActivity() {
         lightModeButtons = arrayListOf(temperatureModeToggle, colorModeToggle)
         lightModeToggleButton = ToggleButton(
                 lightModeButtons,
-                COLORS.colorDefaultBackground,
+                if (nightMode) COLORS.colorDarkDefaultBackground else COLORS.colorDefaultBackground,
                 COLORS.colorPrimary,
                 COLORS.buttonTextColorInverse
         )
@@ -275,17 +281,17 @@ class RoomActivity : AppCompatActivity() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val brightnesses =
-                (deviceStates.filter { it -> it.light_state.brightness > 0 }).map { it -> it.light_state.brightness }
+                    (deviceStates.filter { it -> it.light_state.brightness > 0 }).map { it -> it.light_state.brightness }
             val temperatures =
-                (deviceStates.filter { it -> it.light_state.temperature > 0 }).map { it -> it.light_state.temperature }
+                    (deviceStates.filter { it -> it.light_state.temperature > 0 }).map { it -> it.light_state.temperature }
             val colorPercents = deviceStates.map { it -> it.light_state.colorPercent() }
 
             val brightnessAverage =
-                if (brightnesses.isNotEmpty()) brightnesses.average() else brightnessProgress.toDouble()
+                    if (brightnesses.isNotEmpty()) brightnesses.average() else brightnessProgress.toDouble()
             val temperatureAverage =
-                if (temperatures.isNotEmpty()) temperatures.average() else temperatureProgress.toDouble()
+                    if (temperatures.isNotEmpty()) temperatures.average() else temperatureProgress.toDouble()
             val colorPercentAverage =
-                if (colorPercents.isNotEmpty()) colorPercents.average() else colorProgress.toDouble()
+                    if (colorPercents.isNotEmpty()) colorPercents.average() else colorProgress.toDouble()
 
             brightnessProgress = 1.coerceAtLeast(brightnessAverage.roundToInt())
             temperatureProgress = 0.coerceAtLeast(temperatureAverage.roundToInt())
@@ -298,7 +304,7 @@ class RoomActivity : AppCompatActivity() {
 
             setCurrentLightColor()
             val progressColor: Int
-            lateinit var currentActionButton : MaterialButton
+            lateinit var currentActionButton: MaterialButton
             if (DeviceState.roomIsOn(room!!, deviceStates)) {
                 progressColor = currentLightColor
                 currentActionButton = action2

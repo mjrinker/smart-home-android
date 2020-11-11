@@ -1,5 +1,6 @@
 package com.mjrinker.smarthome.adapters
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -72,6 +73,7 @@ class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoom
     ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val TAG = "roomRecyclerAdapter"
 
+        private var nightMode = itemView.context.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
         private val COLORS = Colors(itemView.context)
         private val roomLabel: TextView = itemView.room_label
         val action1: MaterialButton = itemView.action_1
@@ -79,7 +81,7 @@ class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoom
         private val actionButtons : ArrayList<MaterialButton> =  arrayListOf(action1, action2)
         val actionToggleButton = ToggleButton(
                 actionButtons,
-                COLORS.colorDefaultBackground,
+                if (nightMode) COLORS.colorDarkDefaultBackground else COLORS.colorDefaultBackground,
                 COLORS.colorPrimary,
                 COLORS.buttonTextColorInverse
         )
