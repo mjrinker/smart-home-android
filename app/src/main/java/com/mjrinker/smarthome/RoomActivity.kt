@@ -23,7 +23,6 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
-import java.security.AccessController.getContext
 import kotlin.math.roundToInt
 
 
@@ -283,7 +282,7 @@ class RoomActivity : AppCompatActivity() {
             val brightnesses =
                     (deviceStates.filter { it -> it.light_state.brightness > 0 }).map { it -> it.light_state.brightness }
             val temperatures =
-                    (deviceStates.filter { it -> it.light_state.temperature > 0 }).map { it -> it.light_state.temperature }
+                    (deviceStates.filter { it -> it.light_state.color_temp > 0 }).map { it -> it.light_state.color_temp }
             val colorPercents = deviceStates.map { it -> it.light_state.colorPercent() }
 
             val brightnessAverage =

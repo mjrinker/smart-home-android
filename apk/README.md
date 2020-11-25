@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.4.2](smarthome-v1.4.2.apk):
+- Fix bug
+
 ### [v1.4.1](smarthome-v1.4.1.apk):
 - Fix toggle button "off" color in dark mode (was white, should be dark)
 

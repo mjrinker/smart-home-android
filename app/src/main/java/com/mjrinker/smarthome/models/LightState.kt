@@ -1,19 +1,18 @@
 package com.mjrinker.smarthome.models
 
-import android.util.Log
 import androidx.core.graphics.toColorInt
 import com.mjrinker.smarthome.util.ColorHelper
 
 class LightState(
     val brightness: Int,
     val color: String,
-    val temperature: Int
+    val color_temp: Int
 ) {
     val gradientColors = arrayListOf("#ff0000", "#ff8800", "#ffff00", "#88ff00", "#00ff00", "#00ff88", "#00ffff", "#0088ff", "#0000ff", "#8800ff", "#ff00ff", "#ff0088")
     val colorInts = ArrayList<Int>(gradientColors.map { it -> it.toColorInt() })
 
     override fun toString(): String {
-        return "DeviceState(brightness=$brightness, color='$color', temperature=$temperature)"
+        return "DeviceState(brightness=$brightness, color='$color', temperature=$color_temp)"
     }
 
     fun colorPercent(): Float {
@@ -41,6 +40,6 @@ class LightState(
     }
 
     fun toJSON(): String {
-        return "{\"brightness\":$brightness,\"color\":\"$color\",\"temperature\":$temperature}"
+        return "{\"brightness\":$brightness,\"color\":\"$color\",\"temperature\":$color_temp}"
     }
 }

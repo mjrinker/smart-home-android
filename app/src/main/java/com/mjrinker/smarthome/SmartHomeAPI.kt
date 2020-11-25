@@ -2,7 +2,6 @@ package com.mjrinker.smarthome
 
 import android.util.Log
 import com.google.gson.Gson
-import com.mjrinker.smarthome.adapters.RoomRecyclerAdapter
 import com.mjrinker.smarthome.models.DeviceAction
 import com.mjrinker.smarthome.models.DeviceActionRequest
 import com.mjrinker.smarthome.models.DeviceState
@@ -19,6 +18,7 @@ class SmartHomeAPI(
 ) {
     private val TAG = "SmartHomeAPI"
 
+    private val apiVersion = "2.1.1"
     private val client = OkHttpClient()
     private val baseUrl = "http${if (secure) "s" else ""}://$host:$port"
 
@@ -111,7 +111,7 @@ class SmartHomeAPI(
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         var requestBuilder = Request.Builder()
             .url(url)
-            .header("X-ApiVersion", "2")
+            .header("X-ApiVersion", apiVersion)
 
         requestBuilder = when (method) {
             "get" -> requestBuilder.get()

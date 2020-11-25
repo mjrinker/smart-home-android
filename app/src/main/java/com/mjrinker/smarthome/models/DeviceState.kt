@@ -1,6 +1,5 @@
 package com.mjrinker.smarthome.models
 
-import android.util.Log
 import com.mjrinker.smarthome.SmartHomeAPI
 
 class DeviceState(
