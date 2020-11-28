@@ -103,12 +103,12 @@ class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoom
 
             action1.setOnClickListener {
                 actionToggleButton.toggle(action1)
-                SmartHomeAPI("192.168.0.107", 3030).performAction(room.name, room.actions[0]).send()
+                SmartHomeAPI("192.168.0.160", 3030).performAction(room.name, room.actions[0]).send()
             }
 
             action2.setOnClickListener {
                 actionToggleButton.toggle(action2)
-                SmartHomeAPI("192.168.0.107", 3030).performAction(room.name, room.actions[1]).send()
+                SmartHomeAPI("192.168.0.160", 3030).performAction(room.name, room.actions[1]).send()
             }
         }
     }

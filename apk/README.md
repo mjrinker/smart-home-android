@@ -1,5 +1,9 @@
 # Versions
 
+### [v1.4.3](smarthome-v1.4.3.apk):
+- Allow non-light devices to be included in rooms
+    - 🤓 Make DeviceState.light_state optional
+
 ### [v1.4.2](smarthome-v1.4.2.apk):
 - Fix bug
 

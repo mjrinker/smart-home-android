@@ -209,7 +209,7 @@ class RoomActivity : AppCompatActivity() {
 
     private fun performAction(action: DeviceAction, callback: Any? = null) {
         brightnessControl.progressColor = if (action.action == "on") currentLightColor else COLORS.colorOff
-        val apiConnection = SmartHomeAPI("192.168.0.107", 3030)
+        val apiConnection = SmartHomeAPI("192.168.0.160", 3030)
 
         if (callback != null) {
             apiConnection.callback = callback
@@ -279,11 +279,15 @@ class RoomActivity : AppCompatActivity() {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            val brightnesses =
-                    (deviceStates.filter { it -> it.light_state.brightness > 0 }).map { it -> it.light_state.brightness }
-            val temperatures =
-                    (deviceStates.filter { it -> it.light_state.color_temp > 0 }).map { it -> it.light_state.color_temp }
-            val colorPercents = deviceStates.map { it -> it.light_state.colorPercent() }
+            val brightnesses = deviceStates
+                    .filter { it.light_state != null && it.light_state.brightness > 0 }
+                    .map { if (it.light_state != null) it.light_state.brightness else 0 }
+            val temperatures = deviceStates
+                    .filter { it.light_state != null && it.light_state.color_temp > 0 }
+                    .map { if (it.light_state != null) it.light_state.color_temp else 0 }
+            val colorPercents : List<Float> = deviceStates
+                    .filter { it.light_state != null }
+                    .map { if (it.light_state != null) it.light_state.colorPercent() else 0f }
 
             val brightnessAverage =
                     if (brightnesses.isNotEmpty()) brightnesses.average() else brightnessProgress.toDouble()

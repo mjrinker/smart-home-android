@@ -6,14 +6,14 @@ class DeviceState(
     val name: String,
     val online: Boolean,
     val state: Boolean,
-    val light_state: LightState
+    val light_state: LightState?
 ) {
     override fun toString(): String {
         return "DeviceState(name='$name', online=$online, state=$state, light_state=$light_state)"
     }
 
     fun toJSON(): String {
-        return "{\"name\":\"$name\",\"online\":$online,\"state\":$state,\"light_state\":${light_state.toJSON()}}"
+        return "{\"name\":\"$name\",\"online\":$online,\"state\":$state,\"light_state\":${light_state?.toJSON()}}"
     }
 
     companion object {
@@ -34,7 +34,7 @@ class DeviceState(
 
         fun getDeviceStates(room: Room, deviceStates: ArrayList<DeviceState>) {
             deviceStates.clear()
-            SmartHomeAPI("192.168.0.107", 3030).getDeviceState(
+            SmartHomeAPI("192.168.0.160", 3030).getDeviceState(
                     arrayListOf(room.name),
                     deviceStates
             ).send()
