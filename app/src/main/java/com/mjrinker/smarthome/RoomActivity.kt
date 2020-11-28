@@ -209,7 +209,7 @@ class RoomActivity : AppCompatActivity() {
 
     private fun performAction(action: DeviceAction, callback: Any? = null) {
         brightnessControl.progressColor = if (action.action == "on") currentLightColor else COLORS.colorOff
-        val apiConnection = SmartHomeAPI("192.168.0.160", 3030)
+        val apiConnection = SmartHomeAPI("192.168.0.107", 3030)
 
         if (callback != null) {
             apiConnection.callback = callback

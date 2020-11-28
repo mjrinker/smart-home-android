@@ -8,7 +8,7 @@ class DataSource {
 
     fun loadRooms(roomAdapter: RoomRecyclerAdapter): ArrayList<Room>? {
         val rooms: ArrayList<Room> = arrayListOf()
-        SmartHomeAPI("192.168.0.160", 3030).getRooms(rooms).send()
+        SmartHomeAPI("192.168.0.107", 3030).getRooms(rooms).send()
 
         while (rooms.size == 0) {}
 
