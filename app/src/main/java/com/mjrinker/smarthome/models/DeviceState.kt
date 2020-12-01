@@ -34,7 +34,7 @@ class DeviceState(
 
         fun getDeviceStates(room: Room, deviceStates: ArrayList<DeviceState>) {
             deviceStates.clear()
-            SmartHomeAPI("192.168.0.107", 3030).getDeviceState(
+            SmartHomeAPI("192.168.0.107", 3031).getDeviceState(
                     arrayListOf(room.name),
                     deviceStates
             ).send()
