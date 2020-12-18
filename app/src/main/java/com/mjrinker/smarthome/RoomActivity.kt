@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+import com.fasterxml.jackson.databind.JsonNode
 import com.google.android.material.button.MaterialButton
 import com.mjrinker.smarthome.models.*
 import com.mjrinker.smarthome.util.ColorHelper
@@ -59,6 +60,7 @@ class RoomActivity : AppCompatActivity() {
     private var nightMode : Boolean = false
     private var currentLightColor: Int = -1
     private val deviceStates: ArrayList<DeviceState> = arrayListOf()
+    private val apiConnection = SmartHomeAPI("192.168.0.107", 3030)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,28 +182,6 @@ class RoomActivity : AppCompatActivity() {
                 val action = room!!.actions[actionButtons.indexOf(view)]
                 performAction(
                         action,
-                        object : Callback {
-                            override fun onFailure(call: Call, e: IOException) {
-                                println(e)
-                            }
-
-                            override fun onResponse(call: Call, response: Response) {
-                                response.use {
-                                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                                    val responseBody = response.body()
-                                    val responseBodyString = responseBody?.string()
-                                    println("$TAG->getDeviceState: $responseBodyString")
-                                    val deviceStateResponse = JsonPath.parse(responseBodyString)?.read<ArrayList<DeviceState>>("$.devices")
-                                    if (deviceStateResponse != null) {
-                                        for (device in deviceStateResponse) {
-                                            deviceStates.add(device)
-                                        }
-                                    }
-                                    updateLightControls()
-                                }
-                            }
-                        }
                 )
             }
         }
@@ -209,9 +189,37 @@ class RoomActivity : AppCompatActivity() {
 
     private fun performAction(action: DeviceAction, callback: Any? = null) {
         brightnessControl.progressColor = if (action.action == "on") currentLightColor else COLORS.colorOff
-        val apiConnection = SmartHomeAPI("192.168.0.107", 3030)
 
-        if (callback != null) {
+        if (callback == null) {
+            apiConnection.callback = object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    println(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.use {
+                        if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                        val responseBody = response.body()
+                        val responseBodyString = responseBody?.string()
+                        println("$TAG->getDeviceState: $responseBodyString")
+                        val responseBodyJSON = JsonPath.parse(responseBodyString)
+                        val deviceResponses = responseBodyJSON?.read<ArrayList<JsonNode>>("$.succeeded")
+                        if (deviceResponses != null) {
+                            deviceStates.clear()
+                            for (deviceResponse in deviceResponses) {
+                                val deviceName = deviceResponse.read<String>("$.device.name")
+                                val deviceOnline = deviceResponse.read<Boolean>("$.device.data.online")
+                                val deviceState = deviceResponse.read<Boolean>("$.device.data.state")
+                                val deviceLightState = deviceResponse.read<LightState>("$.device.data.light_state")
+                                deviceStates.add(DeviceState(deviceName!!, deviceOnline!!, deviceState!!, deviceLightState))
+                            }
+                        }
+                        updateLightControls(false)
+                    }
+                }
+            }
+        } else {
             apiConnection.callback = callback
         }
 
@@ -274,8 +282,10 @@ class RoomActivity : AppCompatActivity() {
     private fun updateLightControls(forceGetStates: Boolean = true) {
         if (forceGetStates) {
             DeviceState.getDeviceStates(room!!, deviceStates)
+            while (deviceStates.isEmpty()) {}
+        } else if (deviceStates.isEmpty()) {
+            return
         }
-        while (deviceStates.size == 0) {}
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
@@ -308,7 +318,7 @@ class RoomActivity : AppCompatActivity() {
             setCurrentLightColor()
             val progressColor: Int
             lateinit var currentActionButton: MaterialButton
-            if (DeviceState.roomIsOn(room!!, deviceStates)) {
+            if (DeviceState.roomIsOn(room!!, deviceStates, forceGetStates)) {
                 progressColor = currentLightColor
                 currentActionButton = action2
             } else {

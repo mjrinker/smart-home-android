@@ -10,7 +10,7 @@ class DataSource {
         val rooms: ArrayList<Room> = arrayListOf()
         SmartHomeAPI("192.168.0.107", 3030).getRooms(rooms).send()
 
-        while (rooms.size == 0) {}
+        while (rooms.isEmpty()) {}
 
         roomAdapter.submitList(rooms)
         return rooms

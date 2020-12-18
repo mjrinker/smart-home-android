@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.4.4](smarthome-v1.4.4.apk):
+- Fix the state and light values (on/off, brightness, color, etc.) changing to the wrong values
+
 ### [v1.4.3](smarthome-v1.4.3.apk):
 - Allow non-light devices to be included in rooms
     - 🤓 Make DeviceState.light_state optional

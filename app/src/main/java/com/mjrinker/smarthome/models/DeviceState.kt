@@ -19,9 +19,14 @@ class DeviceState(
     companion object {
         private const val TAG = "DeviceState"
 
-        fun roomIsOn(room: Room, deviceStates: ArrayList<DeviceState>): Boolean {
-            getDeviceStates(room, deviceStates)
-            while (deviceStates.size == 0) {}
+        fun roomIsOn(room: Room, deviceStates: ArrayList<DeviceState>, forceGetStates: Boolean = true): Boolean {
+            if (forceGetStates) {
+                getDeviceStates(room, deviceStates)
+                while (deviceStates.isEmpty()) {}
+            } else if (deviceStates.isEmpty()) {
+                return false
+            }
+
             var isOn = false
             for (deviceState in deviceStates) {
                 isOn = isOn or deviceState.state
