@@ -39,7 +39,6 @@ class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoom
             is RoomViewHolder -> {
                 viewHolder = holder
                 holder.bind(rooms[position])
-                updateRoomStatus(rooms[position])
                 if (position == rooms.size - 1) {
                     // remove bottom border
                     holder.bottomBorder.setBackgroundColor(Color.argb(0, 0, 0, 0))
