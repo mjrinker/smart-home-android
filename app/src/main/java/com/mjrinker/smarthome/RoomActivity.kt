@@ -208,11 +208,12 @@ class RoomActivity : AppCompatActivity() {
                         if (deviceResponses != null) {
                             deviceStates.clear()
                             for (deviceResponse in deviceResponses) {
+                                val deviceId = deviceResponse.read<Int>("$.device.id")
                                 val deviceName = deviceResponse.read<String>("$.device.name")
                                 val deviceOnline = deviceResponse.read<Boolean>("$.device.data.online")
                                 val deviceState = deviceResponse.read<Boolean>("$.device.data.state")
                                 val deviceLightState = deviceResponse.read<LightState>("$.device.data.light_state")
-                                deviceStates.add(DeviceState(deviceName!!, deviceOnline!!, deviceState!!, deviceLightState))
+                                deviceStates.add(DeviceState(deviceId, deviceName!!, deviceOnline!!, deviceState!!, deviceLightState))
                             }
                         }
                         updateLightControls(false)

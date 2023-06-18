@@ -51,7 +51,7 @@ class SmartHomeAPI(
                             "*bulb",
                             true,
                             0,
-                            rooms.any { it -> it.state ?: false },
+                            rooms.any { room -> room.state ?: false },
                             arrayListOf(
                                 DeviceAction("Off", true),
                                 DeviceAction("On", true)
