@@ -1,13 +1,16 @@
 package com.mjrinker.smarthome.models
 
+import android.os.Parcelable
 import androidx.core.graphics.toColorInt
 import com.mjrinker.smarthome.util.ColorHelper
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 class LightState(
     val brightness: Int,
     val color: String,
     val color_temp: Int
-) {
+) : Parcelable {
     val gradientColors = arrayListOf("#ff0000", "#ff8800", "#ffff00", "#88ff00", "#00ff00", "#00ff88", "#00ffff", "#0088ff", "#0000ff", "#8800ff", "#ff00ff", "#ff0088")
     val colorInts = ArrayList<Int>(gradientColors.map { it -> it.toColorInt() })
 

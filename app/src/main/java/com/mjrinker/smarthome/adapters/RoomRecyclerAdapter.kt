@@ -39,6 +39,7 @@ class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoom
             is RoomViewHolder -> {
                 viewHolder = holder
                 holder.bind(rooms[position])
+                updateRoomStatus(rooms[position])
                 if (position == rooms.size - 1) {
                     // remove bottom border
                     holder.bottomBorder.setBackgroundColor(Color.argb(0, 0, 0, 0))
@@ -57,7 +58,7 @@ class RoomRecyclerAdapter(private var rooms: ArrayList<Room>, private var onRoom
 
     private fun updateRoomStatus(room: Room) {
         if (this::viewHolder.isInitialized) {
-            if (DeviceState.roomIsOn(room, viewHolder.deviceStates)) {
+            if (room.state == true) {
                 viewHolder.actionToggleButton.toggle(viewHolder.action2)
             } else {
                 viewHolder.actionToggleButton.toggle(viewHolder.action1)

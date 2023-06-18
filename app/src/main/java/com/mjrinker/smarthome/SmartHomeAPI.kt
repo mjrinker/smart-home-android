@@ -2,10 +2,7 @@ package com.mjrinker.smarthome
 
 import android.util.Log
 import com.google.gson.Gson
-import com.mjrinker.smarthome.models.DeviceAction
-import com.mjrinker.smarthome.models.DeviceActionRequest
-import com.mjrinker.smarthome.models.DeviceState
-import com.mjrinker.smarthome.models.Room
+import com.mjrinker.smarthome.models.*
 import com.nfeld.jsonpathkt.JsonPath
 import com.nfeld.jsonpathkt.extension.read
 import okhttp3.*
@@ -18,7 +15,7 @@ class SmartHomeAPI(
 ) {
     private val TAG = "SmartHomeAPI"
 
-    private val apiVersion = "2.1.1"
+    private val apiVersion = "3.0.0"
     private val client = OkHttpClient()
     private val baseUrl = "http${if (secure) "s" else ""}://$host:$port"
 
@@ -47,15 +44,19 @@ class SmartHomeAPI(
                     if (roomsResponse != null) {
                         rooms.addAll(roomsResponse)
                     }
-
                     rooms.add(
                         0, Room(
+                            0,
                             "All",
                             "*bulb",
+                            true,
+                            0,
+                            rooms.any { it -> it.state ?: false },
                             arrayListOf(
                                 DeviceAction("Off", true),
                                 DeviceAction("On", true)
-                            )
+                            ),
+                            arrayListOf()
                         )
                     )
                 }

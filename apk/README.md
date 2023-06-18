@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.5.0](smarthome-v1.5.0.apk):
+- Get the room state from the initial room response
+
 ### [v1.4.5](smarthome-v1.4.5.apk):
 - Stop the rooms list from updating device states on every view update
 
