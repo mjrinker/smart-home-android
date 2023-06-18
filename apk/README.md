@@ -1,5 +1,8 @@
 # Versions
 
+### [v1.4.5](smarthome-v1.4.5.apk):
+- Stop the rooms list from updating device states on every view update
+
 ### [v1.4.4](smarthome-v1.4.4.apk):
 - Fix the state and light values (on/off, brightness, color, etc.) changing to the wrong values
 
